@@ -1,0 +1,44 @@
+{% extends 'layout.html' %}
+
+{% block breadcrumbs %}
+    <li>{{ flatpage.title }}</li>
+{% endblock %}s
+
+{% block body %}
+
+    <h2>{{ flatpage.title }}</h2>
+    <p>{{flatpage.body|safe}}</p>
+
+{#        <div class="col-md-6 col-sm-6">#}
+{#            <div id="mainbar" class="item-detail">#}
+{#                <h2 id="email">ارسال پیام' </h2>#}
+{#                {% if success %}#}
+{#                    <p class="accept"> 'Your message has been recived and will be replied shortly' </p>#}
+{#                {% else %}#}
+{#                    <form role="form" method="post">#}
+{#                        {% csrf_token %}#}
+{#                        <div class="form-group">#}
+{#                            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>#}
+{#                            {% if form.name.errors %}{{ form.name.errors }}{% endif %}#}
+{#                            <input name="{{ form.name.name }}" type="text" class="form-control" id="{{ form.name.id_for_label }}" value="{{ form.name.value|default_if_none:'' }}">#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>#}
+{#                            {% if form.email.help_text %}<p class="help-block">{{ form.email.help_text }}</p>{% endif %}#}
+{#                            {% if form.email.errors %}{{ form.email.errors }}{% endif %}#}
+{#                            <input name="{{ form.email.name }}" type="text" class="form-control" id="{{ form.email.id_for_label }}" value="{{ form.email.value|default_if_none:'' }}">#}
+{#                        </div>#}
+{#                        <div class="form-group">#}
+{#                            <label for="{{ form.message.id_for_label }}">{{ form.message.label }}</label>#}
+{#                            {% if form.message.errors %}{{ form.message.errors }}{% endif %}#}
+{#                            <textarea name="{{ form.message.name }}" class="form-control" rows="10" id="{{ form.message.id_for_label }}">{{ form.message.value|default_if_none:'' }}</textarea>#}
+{#                        </div>#}
+{##}
+{#                        <button type="submit" class="btn btn-default">ارسال</button>#}
+{#                    </form>#}
+{#                {% endif %}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+{% endblock %}
