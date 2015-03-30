@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+
+{% block breadcrumbs %}
+    <li>{{ flatpage.title }}</li>
+{% endblock %}
+
+{% block body %}
+    <p>{{ flatpage.body|safe }}</p>
+{% endblock %}
