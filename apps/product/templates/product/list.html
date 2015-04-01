@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block container %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+
+                <ul class="list">
+                    {% for product in products.object_list %}{% if forloop.first %}
+                        <li class="first">
+                            <p>Latest Products</p>
+
+                            <h1><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h1>
+                            {% if product.image %}<img src="/media/{{ product.image }}">{% endif %}
+                            <p>{{ product.description|safe|truncatewords:30 }}</p>
+                        </li>
+                    {% else %}
+                        <li>
+                            <h1><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h1>
+                            {% if product.image %}<img src="/media/{{ product.image }}">{% endif %}
+                            <p>{{ product.description|safe|truncatewords:20 }}</p>
+                        </li>
+                    {% endif %}{% endfor %}
+                </ul>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if products.has_previous %}
+                            <a href="?page={{ products.previous_page_number }}">previous</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ products.number }} of {{ products.paginator.num_pages }}.
+                        </span>
+
+                        {% if products.has_next %}
+                            <a href="?page={{ products.next_page_number }}">next</a>
+                        {% endif %}
+                    </span>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
