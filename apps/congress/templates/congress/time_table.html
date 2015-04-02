@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block pageTitle %}{{fee.congress.name}} - Congresses - {{block.super}}{% endblock %}
+{% block currentPage %}congress{% endblock %}
+{% block breadcrumbs %}{{block.super}}<li><a href="/congress/">Congresses</a></li><li><a href="/congress/{{ fee.congress.slug }}/">{{ fee.congress.name }}</a></li><li>Time Table</li>{% endblock %}
+{% block styles %}
+{{block.super}}
+<link href="/site_media/styles/no_sidebar.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block main %}
+	<p class="date">From {{fee.congress.opening_date}} To {{fee.congress.closing_date}}</p>
+	<h1><a href="/congress/{{congress.slug}}">{{fee.congress.name}}</a></h1>
+	<p>{{fee.congress.address}}</p>
+	<p>{{ fee.fee|safe }}</p>
+	<p>{{ fee.workshop_fee|safe }}</p>
+	{% if congress.is_open %}<a href="/congress/register/{{fee.congress.slug}}">Members Registration form</a>{% endif %}
+	{% if congress.is_open %}<a href="/congress/submission/{{fee.congress.slug}}">Article Submission</a>{% endif %}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block pageTitle %}{{congress.name}} - Congresses - {{block.super}}{% endblock %}
+{% block currentPage %}congress{% endblock %}
+{% block breadcrumbs %}{{block.super}}<li><a href="/congress/">Congresses</a></li><li>{{congress.name}}</li>{% endblock %}
+{% block styles %}
+{{block.super}}
+<link href="/media/styles/no_sidebar.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block container %}
+	<p class="date">From {{ congress.opening_date|date:'Y M d'}} To {{congress.closing_date|date:'Y M d'}}</p>
+	<h1><a href="{{item.get_absolute_url}}">{{congress.name}}</a></h1>
+	{% if congress.poster %}<a href="{{congress.get_absolute_url}}"><img src="/media/{{ congress.poster }}" style="width:200px; float:left; margin:0 10px 0 0; border:1px solid #666;"></a>{% endif %}
+	<ul class="list" style="padding-top:20px; margin:20px;">
+		{% if congress.is_open %}<li><a href="/congress/register/{{congress.slug}}">Congress Registeration</a></li>{% endif %}
+		{% if congress.is_open %}<li><a href="/congress/{{ congress.slug }}/members-confirmation/">Congress register Confirmation</a></li>{% endif %}
+		{% if congress.is_open %}<li><a href="/congress/submission/{{congress.slug}}">Article Submission</a></li>{% endif %}
+		{% if congress.is_open %}<li><a href="/congress/{{ congress.slug }}/articles-confirmation/">Articles Confirmation</a></li>{% endif %}
+		{% if congress.fee_set.all.count %}<li><a href="/congress/time-table/{{congress.slug}}">Time Table</a></li>{% endif %}
+		<li>{% if congress.boarddirectory_set.all.count %}<a href="/congress/{{congress.slug}}/board/">Congress Board Directory</a>{% else %}There are no Board Directory Registerd on this congress So far{% endif %}</li>
+	</ul>
+	{% if congress.article_set.all.count %}<p><a href="#articles">Congress Articles</a></p>{% endif %}
+	{% if congress.address %}<p><strong>Address</strong> : {{congress.address}}</p>{% endif %}
+	{% if congress.is_open %}
+		{% if congress.registration_phone %}<p><strong>Registration Phone</strong> : {{congress.registration_phone}}</p>{% endif %}
+		{% if congress.registration_fax %}<p><strong>Registration Fax</strong> : {{congress.registration_fax}}</p>{% endif %}
+		{% if congress.venue %}<a href="/media/{{ congress.venue }}" target="_blank"><img src="/media/{{ congress.venue }}" style="display:block; clear:left; padding-top:30px;" width="300px" /></a>{% endif %}			
+	{% endif %}
+	<p>{{congress.description|safe}}</p>
+	{% if congress.physician_articles_abstract %}<p class="pdf"><a href="/media/{{ item.physician_articles_abstract }}">Physician Articles Abstract</a></p>{% endif %}
+	{% if congress.paramedics_articles_abstract %}<p class="pdf"><a href="/media/{{ item.paramedics_articles_abstract }}">Paramedics Articles Abstract</a></p>{% endif %}
+	{% if congress.sessions_program %}<p class="pdf"><a href="/media/{{ item.sessions_program }}">Congress Sessions Program</a></p>{% endif %}
+	{% if congress.article_set.all.count %}
+		<h1><a name="articles">Congress Article Titles</a></h1>
+		<ul>
+			{% for item in congress.article_set.all %}
+			<li>{{ forloop.counter }} . {{item.abstract_title}}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}

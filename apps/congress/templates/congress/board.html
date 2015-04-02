@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block pageTitle %}Congresses - {{block.super}}{% endblock %}
+{% block currentPage %}congress{% endblock %}
+{% block breadcrumbs %}{{block.super}}<li><a href="/congress/">Congresses</a></li><li><a href="/congress/{{ board.0.congress.slug }}/">{{ board.0.congress.name }}</a></li><li>Board Directory</li>{% endblock %}
+
+{% block main %}
+<p class="date">From {{ board.0.congress.opening_date|date:'Y M d'}} To {{board.0.congress.closing_date|date:'Y M d'}}</p>
+<h1>Board Directory of {{ board.0.congress.name }}</h1>
+<p>{{ board.0.congress.address }}</p>
+	<ul class="congressBoardList">
+	{% for item in board %}
+		<li{% ifequal item.title "Chairman of the Congress" %} class="one"{% endifequal %}{% ifequal item.title "Vice Chairman of the Congress" %} class="one"{% endifequal %}>
+			{% if item.photo %}
+				<img src="/site_media/{{ item.photo }}" title="Dr. {{item.name}}">
+			{% else %}
+				<img src="/site_media/uploads/no-photo.gif">
+			{% endif %}
+			<h2>{{item.name}}</h2>
+			{% if item.title %}<em>{{item.title}}</em>{% endif %}
+		</li>
+		
+	{% endfor %}
+	<div class="clearer"></div>
+	</ul>
+{% endblock %}

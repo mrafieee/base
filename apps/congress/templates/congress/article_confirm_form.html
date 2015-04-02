@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block pageTitle %}Articles Submissions Confirmation - {{congress.name}} - {{block.super}}{% endblock %}
+{% block styles %}{{block.super}}<link href="/site_media/styles/no_sidebar.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block currentPage %}congress{% endblock %}
+{% block breadcrumbs %}{{block.super}}<li><a href="/congress/">Congresses</a></li><li><a href="{{ congress.get_absolute_url }}">{{congress.name}}</a></li><li>Articles Submissions Confirmation</li>{% endblock %}
+
+{% block main %}
+	{% if form %}
+		<h1><a name="help">Article submission Confirmation</a></h1>
+		<p class="info">Fields Marked with red asters are required.</p>
+		<p class="info">you have got this code after your submissions.</p>
+		<p class="info">you have not submit your article yet click <a href="/congress/submission/{{congress.slug}}">here</a></p>
+		<p class="info">if you have forgotten your tracking code you can call office for more information using <a href="/contact/">contacts</a></p>
+		<form method="post" action="" id="congress" class="form">
+			<fieldset>
+				<legend>Confirmation Form</legend>	
+				{% include 'form.html' %}
+			</fieldset>
+		
+		<input class="submit" value="Confirm" type="submit" />
+		</form>
+	{% else %}
+		<h1><a name="help">{{ article.first_name }} {{ article.last_name }}'s Information</a></h1>
+		<p class="info">if your information has a problem call office for more information using <a href="/contact/">contacts</a></p>
+		<ul>
+			<li><p>Dear {{ article.first_name }} {{ article.last_name }} your Status is <strong>{% ifequal article.status 0 %}Pending{% endifequal %}{% ifequal article.status 1 %}Rejected{% endifequal %}{% ifequal article.status 2 %}Accepted{% endifequal %}</strong></p></li>
+			<li><strong>email</strong> : {{ article.email }}</li>
+			<li><strong>postal address</strong> : {{ article.postal_address }}</li>
+			<li><strong>phone</strong> : {{ article.phone }}</li>
+			<li><strong>main topic</strong> : {{ article.main_topic }}</li>
+			<li><strong>abstract title</strong> : {{ article.abstract_title }}</li>
+			<li><strong>authors</strong> : {{ article.authors }}</li>
+			<li><strong>abstract</strong> : {{ article.abstract }}</li>
+			<li><strong>your tracking code</strong> : {{ article.code }}</li>
+		</ul>
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block pageTitle %}Congresses - {{block.super}}{% endblock %}
+{% block currentPage %}congress{% endblock %}
+{% block breadcrumbs %}{{block.super}}<li>Congresses</li>{% endblock %}
+
+{% block container %}
+{% if msg %}<h1>Up Comming Congresses</h1><p>{{msg}}</p>{% endif %}
+	<ul class="list">
+	{% for item in congresses.object_list %}
+		{% if forloop.first %}
+			<li class="first">
+			<p>Our Latest Congress</p>
+			<p class="date">From {{ item.opening_date|date:'Y/m/d'}} To {{item.closing_date|date:'Y/m/d'}}</p>
+			<h1><a href="{{item.get_absolute_url}}">{{item.name}}</a></h1>
+			{% if item.poster %}<a href="{{item.get_absolute_url}}"><img src="/media/{{ item.poster }}" style="width:200px; float:left; margin:0 10px 0 0; border:1px solid #666;"></a>{% endif %}
+			<p>{{ item.description|safe|truncatewords:45 }}</p>
+			{% if item.address %}<p><strong>Address</strong> : {{item.address}}</p>{% endif %}
+			<p class="info"><strong>{{ item.article_set.all.count }}</strong> Articles available on this congress</p>
+			{% if item.physician_articles_abstract %}<p class="pdf"><a href="/media/{{ item.physician_articles_abstract }}">Physician Articles Abstract</a></p>{% endif %}
+			{% if item.paramedics_articles_abstract %}<p class="pdf"><a href="/media/{{ item.paramedics_articles_abstract }}">Paramedics Articles Abstract</a></p>{% endif %}
+			{% if item.sessions_program %}<p class="pdf"><a href="/media/{{ item.sessions_program }}">Congress Sessions Program</a></p>{% endif %}
+			<ul>
+				{% if item.is_open %}<li><a href="/congress/register/{{item.slug}}">Congress Registeration</a></li>{% endif %}
+				{% if item.is_open %}<li><a href="/congress/{{ item.slug }}/members-confirmation/">Congress register Confirmation</a></li>{% endif %}
+				{% if item.is_open %}<li><a href="/congress/submission/{{item.slug}}">Article Submission</a></li>{% endif %}
+				{% if item.is_open %}<li><a href="/congress/{{ item.slug }}/articles-confirmation/">Articles Confirmation</a></li>{% endif %}
+				{% if item.is_open %}<li><a href="/congress/time-table/{{item.slug}}">Time Table</a></li>{% endif %}
+				<li>{% if item.boarddirectory_set.all.count %}<a href="/congress/{{item.slug}}/board/">Congress Board Directory</a>{% else %}There are no Board Directory Registerd on this congress So far{% endif %}
+</li>
+			</ul>
+
+			</li>
+<div class=clearer></div>
+		{% else %}
+		<li>
+			<h1><a href="{{item.get_absolute_url}}">{{item.name}}</a></h1>
+			{% if item.poster %}<img src="/media/{{ item.poster }}" style="width:200px; float:left; margin:0 10px 0 0; border:1px solid #666;">{% endif %}
+			<p class="date">From {{ item.opening_date|date:'Y/m/d'}} To {{item.closing_date|date:'Y/m/d'}}</p>
+			{% if item.address %}<p><strong>Address</strong> : {{item.address}}</p>{% endif %}
+			<p class="info"><strong>{{ item.article_set.all.count }}</strong> Articles Pulished on this congress</p>
+			{% if item.physician_articles_abstract %}<p class="pdf"><a href="/media/{{ item.physician_articles_abstract }}">Physician Articles Abstract</a></p>{% endif %}
+			{% if item.paramedics_articles_abstract %}<p class="pdf"><a href="/media/{{ item.paramedics_articles_abstract }}">Paramedics Articles Abstract</a></p>{% endif %}
+			{% if item.sessions_program %}<p class="pdf"><a href="/media/{{ item.sessions_program }}">Congress Sessions Program</a></p>{% endif %}
+			<p>{{item.description|safe|truncatewords:20}}</p>
+			<ul>
+				{% if item.is_open %}<li><a href="/congress/register/{{item.slug}}">Congress Registeration</a></li>{% endif %}
+				{% if item.is_open %}<li><a href="/congress/{{ item.slug }}/members-confirmation/">Congress register Confirmation</a></li>{% endif %}
+				{% if item.is_open %}<li><a href="/congress/submission/{{item.slug}}">Article Submission</a></li>{% endif %}
+				{% if item.is_open %}<li><a href="/congress/{{ item.slug }}/articles-confirmation/">Articles Confirmation</a></li>{% endif %}
+				{% if item.fee_set.all.count %}<li><a href="/congress/time-table/{{item.slug}}">Time Table</a></li>{% endif %}
+				<li>{% if item.boarddirectory_set.all.count %}<a href="/congress/{{item.slug}}/board/">Congress Board Directory</a>{% else %}There are no Board Directory Registerd on this congress So far{% endif %}</li>
+			</ul>
+		</li>
+		{% endif %}
+	{% endfor %}
+	</ul>
+		<div class="pagination">
+		    <span class="step-links">
+		        {% if congresses.has_previous %}
+		            <a href="?page={{ congresses.previous_page_number }}">previous</a>
+		        {% endif %}
+
+		        <span class="current">
+		            Page {{ congresses.number }} of {{ congresses.paginator.num_pages }}.
+		        </span>
+
+		        {% if congresses.has_next %}
+		            <a href="?page={{ congresses.next_page_number }}">next</a>
+		        {% endif %}
+		    </span>
+		</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block pageTitle %}Article Submission - {{congress.name}} - {{block.super}}{% endblock %}
+{% block styles %}{{block.super}}<link href="/site_media/styles/no_sidebar.css" rel="stylesheet" type="text/css" />{% endblock %}
+{% block currentPage %}congress{% endblock %}
+{% block breadcrumbs %}{{block.super}}<li><a href="/congress/">Congresses</a></li><li><a href="{{ congress.get_absolute_url }}">{{congress.name}}</a></li><li>Article Submission</li>{% endblock %}
+
+{% block main %}
+	{% if form %}
+	<h1><a name="help">{{congress.name}} Article Submission</a></h1>
+	<p class="info">Fields Marked with red asters are required.</p>
+	<p class="info">After Submission via form you will recieve a numeral code.</p>
+	<p class="info">If you have been submitted an article check its status using <a href="/congress/{{ congress.slug }}/articles-confirmation/">Articles Confirmation</a> link.</p>
+	<form method="post" action="" id="congress" class="form">
+		<fieldset>
+			<legend>Submission Form</legend>	
+			{% include 'form.html' %}
+		</fieldset>
+	
+	<input class="submit" value="Send us Your Article" type="submit" />
+	</form>
+	{% else %}
+		<h1><a name="help">Submission successfully Finished</a></h1>
+		<p class="info">you have sent us your article you can check its status using <a href="/congress/{{ congress.slug }}/articles-confirmation/">Articles Confirmation</a> link.</p>
+		<p class="info">keep your submission tracking code safe till confirmation<h2 align="center">Your Submission Tracking Code is : {{ code }}</h2></p>
+	{% endif %}
+{% endblock %}
